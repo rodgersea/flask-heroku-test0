@@ -39,8 +39,12 @@ def download():
 @app.route('/uploader', methods=['POST'])
 def upload_file():
     print('POST_____________________________________________________________')
-    file = request.files['file']
-    print(file)
+    print('1')
+    print(request.files['file'])
+    print('2')
+    print(request.form['file'])
+    print('3')
+    print(request.form.getlist('file'))
     print('\n')
 
     for file in request.files.getlist('file'):  # temporarily save import folder in uploads folder
