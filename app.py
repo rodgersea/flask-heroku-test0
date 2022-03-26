@@ -36,12 +36,14 @@ def download():
         return send_file(zip_buffer, mimetype='zip', attachment_filename='sample_Folder.zip', as_attachment=True)
 
 
-@app.route('/uploader', methods=['POST'])
+@app.route('/', methods=['POST'])
 def upload_file():
     print('POST_____________________________________________________________')
+
     try:
         print('1')
-        print(request.files['file'])
+        for file in request.files['file']:
+            print(file.filename)
     except:
         print('1 fail')
     try:
