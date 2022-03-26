@@ -38,6 +38,10 @@ def download():
 
 @app.route('/', methods=['POST'])
 def upload_file():
+    if not os.path.isfile('lead_Pit/LRA/finished_Docs'):
+        os.makedirs('lead_Pit/LRA/finished_Docs', exist_ok=True)
+    if not os.path.isfile('uploads'):
+        os.makedirs('uploads', exist_ok=True)
     print('POST_____________________________________________________________')
 
     try:
@@ -77,6 +81,9 @@ def upload_file():
                 zipfolder.write(root + '/' + file, 'output/' + str(root).split('\\')[-1] + '/' + file)
     zipfolder.close()
     zip_buffer.seek(0)
+
+    os.remove('uploads')
+    os.remove('lead_Pit/LRA/finished_Docs')
 
     # send zipfile to user
     return send_file(zip_buffer, mimetype='zip', attachment_filename='test.zip', as_attachment=True)
