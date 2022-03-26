@@ -36,45 +36,42 @@ def download():
         return send_file(zip_buffer, mimetype='zip', attachment_filename='sample_Folder.zip', as_attachment=True)
 
 
-@app.route('/uploader', methods=['GET', 'POST'])
+@app.route('/uploader', methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
-        print('POST_____________________________________________________________')
-        print('\nrequest\n')
-        print(request.files)
-        file = request.files['file']
-        print(file)
-        print('\n')
+    print('POST_____________________________________________________________')
+    file = request.files['file']
+    print(file)
+    print('\n')
 
-        for file in request.files.getlist('file'):  # temporarily save import folder in uploads folder
-            print('check1')
-            path_conc = ''
-            for x in range(1, len(str(file.filename).split('/'))-1):
-                print('check2')
-                if not os.path.exists('uploads' + path_conc + '/' + str(file.filename).split('/')[x]):
-                    print('check3')
-                    os.makedirs('uploads' + path_conc + '/' + str(file.filename).split('/')[x])
-                print('check4')
-                path_conc += '/' + str(file.filename).split('/')[x]
-                print('check5')
-            file.save('uploads' + path_conc + '/' + str(file.filename).split('/')[x+1])
+    for file in request.files.getlist('file'):  # temporarily save import folder in uploads folder
+        print('check1')
+        path_conc = ''
+        for x in range(1, len(str(file.filename).split('/'))-1):
+            print('check2')
+            if not os.path.exists('uploads' + path_conc + '/' + str(file.filename).split('/')[x]):
+                print('check3')
+                os.makedirs('uploads' + path_conc + '/' + str(file.filename).split('/')[x])
+            print('check4')
+            path_conc += '/' + str(file.filename).split('/')[x]
+            print('check5')
+        file.save('uploads' + path_conc + '/' + str(file.filename).split('/')[x+1])
 
-        print('line before make_it()')
-        make_it()  # create and temporarily save all report documents
+    print('line before make_it()')
+    make_it()  # create and temporarily save all report documents
 
-        # save all report documents on ephemeral zipfile
-        zip_buffer = BytesIO()
-        zipfolder = ZipFile(zip_buffer, 'w', compression=zipfile.ZIP_STORED)
-        for (root, dirs, files) in os.walk('lead_Pit/LRA/finished_Docs', topdown=True):
-            if files:
-                print('root', root)
-                for file in files:
-                    zipfolder.write(root + '/' + file, 'output/' + str(root).split('\\')[-1] + '/' + file)
-        zipfolder.close()
-        zip_buffer.seek(0)
+    # save all report documents on ephemeral zipfile
+    zip_buffer = BytesIO()
+    zipfolder = ZipFile(zip_buffer, 'w', compression=zipfile.ZIP_STORED)
+    for (root, dirs, files) in os.walk('lead_Pit/LRA/finished_Docs', topdown=True):
+        if files:
+            print('root', root)
+            for file in files:
+                zipfolder.write(root + '/' + file, 'output/' + str(root).split('\\')[-1] + '/' + file)
+    zipfolder.close()
+    zip_buffer.seek(0)
 
-        # send zipfile to user
-        return send_file(zip_buffer, mimetype='zip', attachment_filename='test.zip', as_attachment=True)
+    # send zipfile to user
+    return send_file(zip_buffer, mimetype='zip', attachment_filename='test.zip', as_attachment=True)
 
 
 if __name__ == '__main__':
