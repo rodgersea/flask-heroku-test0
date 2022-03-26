@@ -82,8 +82,20 @@ def upload_file():
     zipfolder.close()
     zip_buffer.seek(0)
 
-    os.remove('uploads')
-    os.remove('lead_Pit/LRA/finished_Docs')
+    # after zipfile is written, clear all temporary data from server
+    for (root, dirs, files) in os.walk('uploads', topdown=True):
+        if files:
+            for file in files:
+                os.remove(root + '/' + file)
+    for (root, dirs, files) in os.walk('uploads', topdown=False):
+        os.rmdir(root)
+
+    for (root, dirs, files) in os.walk('lead_Pit/LRA/finished_Docs', topdown=True):
+        if files:
+            for file in files:
+                os.remove(root + '/' + file)
+    for (root, dirs, files) in os.walk('lead_Pit/LRA/finished_Docs', topdown=False):
+        os.rmdir(root)
 
     # send zipfile to user
     return send_file(zip_buffer, mimetype='zip', attachment_filename='test.zip', as_attachment=True)
