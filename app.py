@@ -41,19 +41,11 @@ def upload_file():
     print('POST_____________________________________________________________')
 
     try:
-        print('1')
-        for file in request.files['file']:
-            print(file.filename)
-    except:
-        print('1 fail')
-    try:
-        print('2')
-        print(request.form['file'])
-    except:
-        print('2 fail')
-    try:
         print('3')
         print(request.form.getlist('file'))
+        for file in request.form.getlist('file'):
+            print(file)
+            print(file.filename)
     except:
         print('3 fail')
     print('\n')
