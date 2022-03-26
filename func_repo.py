@@ -10,7 +10,7 @@ from docx.oxml.shared import qn
 from docx.enum.table import WD_ALIGN_VERTICAL
 from matplotlib.backends.backend_pdf import PdfPages
 from datetime import datetime
-from tabula.io import read_pdf
+from tabula import read_pdf
 from tools import *
 
 import matplotlib.pyplot as plt
