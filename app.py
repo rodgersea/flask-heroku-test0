@@ -43,6 +43,8 @@ def upload_file():
         print('\nrequest\n')
         print(request.files)
         file = request.files['file']
+        print(file)
+        print('\n')
 
         for file in request.files.getlist('file'):  # temporarily save import folder in uploads folder
             print('check1')
