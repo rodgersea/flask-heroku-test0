@@ -42,8 +42,8 @@ def upload_file():
 
     try:
         print('3')
-        print(request.form.getlist('file'))
         for file in request.form.getlist('file'):
+            print('\nfile')
             print(file)
             print(file.filename)
     except:
@@ -63,13 +63,14 @@ def upload_file():
             print('check5')
         file.save('uploads' + path_conc + '/' + str(file.filename).split('/')[x+1])
 
-    print('line before make_it()')
-    make_it()  # create and temporarily save all report documents
+    # print('line before make_it()')
+    # make_it()  # create and temporarily save all report documents
 
     # save all report documents on ephemeral zipfile
     zip_buffer = BytesIO()
     zipfolder = ZipFile(zip_buffer, 'w', compression=zipfile.ZIP_STORED)
-    for (root, dirs, files) in os.walk('lead_Pit/LRA/finished_Docs', topdown=True):
+    # for (root, dirs, files) in os.walk('lead_Pit/LRA/finished_Docs', topdown=True):
+    for (root, dirs, files) in os.walk('uploads', topdown=True):
         if files:
             print('root', root)
             for file in files:
