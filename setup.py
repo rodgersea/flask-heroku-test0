@@ -12,6 +12,7 @@ setup(
         'urllib3 == 1.26.9',
         'Werkzeug == 2.0.3',
         'tabula.py == 2.3.0',
+        'tabula == 2.3.0',
         'docx2pdf == 0.1.8',
         'pypdf2 == 1.26.0',
         'python-docx == 0.8.11',
